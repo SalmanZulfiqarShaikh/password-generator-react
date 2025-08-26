@@ -30,21 +30,21 @@ function App() {
     <>
   <div className='w-full max-w-md mx-auto shadow-md rounded-lg px-4 py-9 my-8 text-orange-400 bg-gray-700'>
         <h3 className='text-amber-300 text-shadow-black text-center mb-9 font-black'>
-          Password Generator
+          Random Password Generator
         </h3>
 
         {/* Input + Button Row */}
         <div className='flex shadow rounded-lg overflow-hidden mb-6 gap-2'>
           <input
             type="text"
-            className='w-full px-3 py-2 text-yellow-300 bg-amber-900 rounded-2xl'
+            className='w-full px-3 py-2 text-yellow-300 bg-amber-900 rounded-2xl cursor-pointer'
             placeholder='Password'
             readOnly
             value={password}
           />
           <button
-            className='bg-orange-400 text-yellow-200 px-3 py-2 hover:bg-orange-500 rounded-2xl'
-            onClick={generatePassword}
+            className='bg-orange-400 text-yellow-200 px-3 py-2 hover:bg-orange-500 rounded-2xl cursor-pointer'
+            
           >
             Copy
           </button>
@@ -59,31 +59,34 @@ function App() {
             max={32}
             value={length}
             onChange={(e) => lengthSetter(e.target.value)}
-            className='w-full accent-orange-500'
+            className='cursor-pointer w-full accent-orange-500'
           />
           <span className='text-white font-bold'>{length}</span>
         </div>
 
         {/* Options */}
-        <div className='flex items-center gap-6'>
-          <label className='flex items-center gap-2'>
-            <input
-              type="checkbox"
-              checked={numberAllowed}
-              onChange={() => setNumberAllowed(!numberAllowed)}
-            />
-            Numbers
-          </label>
+<div className='flex items-center justify-evenly gap-6 mt-4'>
+  <label className='flex items-center gap-2'>
+    <input
+      type="checkbox"
+      checked={numberAllowed}
+      onChange={() => setNumberAllowed(!numberAllowed)}
+      className='cursor-pointer'
+    />
+    Numbers
+  </label>
 
-          <label className='flex items-center gap-2'>
-            <input
-              type="checkbox"
-              checked={symbolAllowed}
-              onChange={() => setSymbolAllowed(!symbolAllowed)}
-            />
-            Symbols
-          </label>
-        </div>
+  <label className='flex items-center gap-2'>
+    <input
+      type="checkbox"
+      checked={symbolAllowed}
+      onChange={() => setSymbolAllowed(!symbolAllowed)}
+      className='cursor-pointer'
+    />
+    Symbols
+  </label>
+</div>
+
       </div>
 </>
 
