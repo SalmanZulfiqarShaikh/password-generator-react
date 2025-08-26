@@ -28,14 +28,65 @@ function App() {
 
   return (
     <>
-            <div className='w-full max-w-md mx-auto shadow-md rounded-lg px-4 my8 text-orange-400 bg-gray-700'>
-              <div className='flex shadow rounded-lg overflow-hidden mb-4'>
-                <input type="text" className='w-full px-3 py-2 text-yellow-300' placeholder='Password' readOnly value={password} />
-                <button className='bg-orange-400 text-yellow-200 px-3 py-2 hover:bg-orange-500' onClick={generatePassword}>Copy</button>
-              </div>
-            </div>
-          
-    </>
+  <div className='w-full max-w-md mx-auto shadow-md rounded-lg px-4 py-9 my-8 text-orange-400 bg-gray-700'>
+        <h3 className='text-amber-300 text-shadow-black text-center mb-9 font-black'>
+          Password Generator
+        </h3>
+
+        {/* Input + Button Row */}
+        <div className='flex shadow rounded-lg overflow-hidden mb-6 gap-2'>
+          <input
+            type="text"
+            className='w-full px-3 py-2 text-yellow-300 bg-amber-900 rounded-2xl'
+            placeholder='Password'
+            readOnly
+            value={password}
+          />
+          <button
+            className='bg-orange-400 text-yellow-200 px-3 py-2 hover:bg-orange-500 rounded-2xl'
+            onClick={generatePassword}
+          >
+            Copy
+          </button>
+        </div>
+
+        {/* Length Slider Row */}
+        <div className='flex items-center gap-3 mb-6'>
+          <label className='text-white font-semibold'>Length:</label>
+          <input
+            type="range"
+            min={4}
+            max={32}
+            value={length}
+            onChange={(e) => lengthSetter(e.target.value)}
+            className='w-full accent-orange-500'
+          />
+          <span className='text-white font-bold'>{length}</span>
+        </div>
+
+        {/* Options */}
+        <div className='flex items-center gap-6'>
+          <label className='flex items-center gap-2'>
+            <input
+              type="checkbox"
+              checked={numberAllowed}
+              onChange={() => setNumberAllowed(!numberAllowed)}
+            />
+            Numbers
+          </label>
+
+          <label className='flex items-center gap-2'>
+            <input
+              type="checkbox"
+              checked={symbolAllowed}
+              onChange={() => setSymbolAllowed(!symbolAllowed)}
+            />
+            Symbols
+          </label>
+        </div>
+      </div>
+</>
+
   )
 }
 
