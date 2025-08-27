@@ -5,31 +5,44 @@ import './App.css'
 
 function App() {
 
+  // Use State intitial conditions(number selected,sysmbols not selected,length 8)
+
   const [length, lengthSetter] = useState(8);
   const [numberAllowed, setNumberAllowed] = useState(true);
  const [symbolAllowed, setSymbolAllowed] = useState(false);
  const [password, setPassword] = useState('');
 
+ //useRef hook to select the input field
+
+ const passwordRef = useCallback((node)=>{
+ })
+
+// Function to generate password (using callback hook to memoize the function){dependencies shit}
+
+
  const generatePassword = useCallback(()=>{
   let pass = "";
   let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
+  // check if numbers or symbols are allowed
+
   if(numberAllowed){ str += "0123456789";} 
   if(symbolAllowed){str += "!@#$%^&*()_+";}
-
+// loop that runs for the length of the password
   for(let i = 1; i<=length; i++){
     let char = Math.floor(Math.random()*str.length + 1);
     pass += str.charAt(char);
     setPassword(pass);
-  }
+  } // dependencies hai neechay if any change generate for optimat
  }, [length, numberAllowed, symbolAllowed,setPassword])
-
+//useEffect is used when litreally even the sa=mallest of changess will happen in the dependencies
  useEffect(()=>{
   generatePassword()
  }, [length, numberAllowed, symbolAllowed, generatePassword])
  
 
   return (
+    // our html
     <>
   <div className='w-full max-w-md mx-auto shadow-md rounded-lg px-4 py-9 my-8 text-orange-400 bg-gray-700'>
         <h3 className='text-amber-300 text-shadow-black text-center mb-9 font-black'>
@@ -44,6 +57,7 @@ function App() {
             placeholder='Password'
             readOnly
             value={password}
+            ref={passwordRef}
           />
           <button
             className='bg-orange-400 text-yellow-200 px-3 py-2 hover:bg-orange-500 rounded-2xl cursor-pointer'
@@ -58,10 +72,10 @@ function App() {
           <label className='text-white font-semibold'>Length:</label>
           <input
             type="range"
-            min={4}
-            max={32}
-            value={length}
-            onChange={(e) => lengthSetter(e.target.value)}
+            min={4} // minimum length of password
+            max={32} // maximum length of password
+            value={length} // length set through slider(initially 8)
+            onChange={(e) => lengthSetter(e.target.value)} // on change event to set the length
             className='cursor-pointer w-full accent-orange-500'
           />
           <span className='text-white font-bold'>{length}</span>
@@ -73,7 +87,7 @@ function App() {
     <input
       type="checkbox"
       checked={numberAllowed}
-      onChange={() => setNumberAllowed(!numberAllowed)}
+      onChange={() => setNumberAllowed(!numberAllowed)} // toggle number allowed
       className='cursor-pointer'
     />
     Numbers
@@ -83,7 +97,7 @@ function App() {
     <input
       type="checkbox"
       checked={symbolAllowed}
-      onChange={() => setSymbolAllowed(!symbolAllowed)}
+      onChange={() => setSymbolAllowed(!symbolAllowed)} // toggle symbol allowed
       className='cursor-pointer'
     />
     Symbols
