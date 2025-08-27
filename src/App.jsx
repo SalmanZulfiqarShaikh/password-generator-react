@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -11,33 +11,47 @@ function App() {
   const [numberAllowed, setNumberAllowed] = useState(true);
  const [symbolAllowed, setSymbolAllowed] = useState(false);
  const [password, setPassword] = useState('');
+ const [copied, setCopied] = useState(false); // copy state
+
+
 
  //useRef hook to select the input field
+ const passwordRef = useRef(null)
+// function to copy the password to clipboard
+  const copyPassword = useCallback(() => {
+    passwordRef.current?.select();
+    navigator.clipboard.writeText(password);
+    setCopied(true);
 
- const passwordRef = useCallback((node)=>{
- })
+    // reset after 5 sec
+    setTimeout(() => setCopied(false), 5000);
+  }, [password]);
+
 
 // Function to generate password (using callback hook to memoize the function){dependencies shit}
-
-
  const generatePassword = useCallback(()=>{
   let pass = "";
   let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
   // check if numbers or symbols are allowed
-
   if(numberAllowed){ str += "0123456789";} 
   if(symbolAllowed){str += "!@#$%^&*()_+";}
 // loop that runs for the length of the password
   for(let i = 1; i<=length; i++){
     let char = Math.floor(Math.random()*str.length + 1);
     pass += str.charAt(char);
-    setPassword(pass);
-  } // dependencies hai neechay if any change generate for optimat
+  } 
+  setPassword(pass);
+
+  // dependencies hai neechay if any change generate for optimat
  }, [length, numberAllowed, symbolAllowed,setPassword])
-//useEffect is used when litreally even the sa=mallest of changess will happen in the dependencies
+
+
+
+//useEffect is used when litreally even the samallest of changess will happen in the dependencies
  useEffect(()=>{
   generatePassword()
+  
  }, [length, numberAllowed, symbolAllowed, generatePassword])
  
 
@@ -59,12 +73,11 @@ function App() {
             value={password}
             ref={passwordRef}
           />
-          <button
-            className='bg-orange-400 text-yellow-200 px-3 py-2 hover:bg-orange-500 rounded-2xl cursor-pointer'
-            
+          <button  onClick={copyPassword}
+            className='bg-orange-400 text-yellow-200 px-3 py-2 hover:bg-orange-500 rounded-2xl cursor-pointer'// onClick event to copy the password // show copied if copied is true else show copy
           >
-            Copy
-          </button>
+            {copied ? "Copied!" : "Copy"} 
+          </button>  
         </div>
 
         {/* Length Slider Row */}
