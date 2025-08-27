@@ -51,7 +51,7 @@ function App() {
 //useEffect is used when litreally even the samallest of changess will happen in the dependencies
  useEffect(()=>{
   generatePassword()
-  
+  setCopied(false);
  }, [length, numberAllowed, symbolAllowed, generatePassword])
  
 
